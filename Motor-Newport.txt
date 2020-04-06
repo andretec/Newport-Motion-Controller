@@ -1,0 +1,59 @@
+ESP301-User-s-Manual.pdf
+
+
+An axis assigned to a group cannot be moved individually using commands such as PA and PR.
+Use group linear move commands instead.
+Refer to the description of this command in the commands section
+(See Section 3: Remote Mode) for correct syntax, parameter ranges.
+
+HC move group along an arc -> pag 104
+
+If this command is received while a group move is in progress, the new command
+gets enqueued into a “via point” buffer. Please refer Advanced Capabilities
+section for a detailed description of via point buffer implementation. The
+enqueued commands get executed on a FIFO basis when the move already in
+progress has reached its destination. The group does not come to a stop at the
+end of last move. Instead, there will be a smooth transition to the new move
+command, just as if it were one compound move (combination of multiple
+moves).
+
+
+Page 2017
+
+In order to store the multiple move segment commands needed to
+make a contour, we make use of a "via point" buffer. This "via point"
+buffer contains group move commands essential to make a new move
+segment upon completion of the move segment currently in progress.
+The new move commands are pulled out of the buffer on a FIFO
+basis. The "via point" buffer can hold a maximum of 10 group move
+commands. If more than 10 group move commands are issued by a
+user, the excess commands are flow-controlled by the firmware.
+
+
+
+HP read group position .............................................................................. 76
+
+
+
+
+
+TP read actual position ............................................................................ 138
+
+
+
+
+
+WP wait for position .................................................................................. 150
+
+
+
+
+
+
+WS wait for motion stop ........................................................................... 151
+
+
+
+
+
+
